@@ -38,7 +38,7 @@ def load_image(request):
         name = save_image(img.read())
         res.set_cookie('image', name)
     except:
-        redirect('/')
+        pass
     return res
 
 
