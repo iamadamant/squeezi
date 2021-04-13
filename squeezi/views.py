@@ -32,10 +32,10 @@ def main(request):
 
 
 def load_image(request):
+    res = redirect('/')
     try:
         img = request.FILES['image']
         name = save_image(img.read())
-        res = redirect('/')
         res.set_cookie('image', name)
     except:
         redirect('/')
