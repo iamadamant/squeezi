@@ -37,8 +37,8 @@ def load_image(request):
         img = request.FILES['image']
         name = save_image(img.read())
         res.set_cookie('image', name)
-    except:
-        pass
+    except Exception as e:
+        return HttpResponse(e)
     return res
 
 
