@@ -1,4 +1,4 @@
-from os import stat, path, mkdir
+from os import stat, mkdir
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 import time
@@ -8,11 +8,12 @@ import requests
 from PIL import Image
 from requests.api import patch
 import math
+import os
 
 
 def save_image(file_body):
     name = str(int(time.time()))
-    if not path.exists('static/loaded_images/'):
+    if not os.path.exists('static/loaded_images/'):
         mkdir('static/loaded_images/')
     f = open('static/loaded_images/'+name, 'wb')
     f.write(file_body)
