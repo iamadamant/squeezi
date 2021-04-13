@@ -97,6 +97,9 @@ def squeeze(request):
         im = Image.open('static/'+name)
         ext = method.lower()
 
+        if not os.path.exists('static/squeezed_images/'):
+            mkdir('static/squeezed_images/')
+
         new_name = 'squeezed_images/'+str(int(time.time())) + '.' + ext
 
         im.save('static/'+new_name, method, quality=quality)
