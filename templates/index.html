@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <title>Squeezi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'img/logo.ico' %}" type="image/x-icon">
+</head>
+
+<body class="container">
+  <div>
+
+    <header class="mt-5 mb-5 row">
+      <h1>
+        <span class="main-theme text-dark p-3 ml-3" style="border-radius: 10px;">Squ</span>
+        <span class="text-white">eezi</span>
+      </h1>
+    </header>
+
+    <div class="row">
+      <div class="col-lg-9 mt-2">
+        <input type="text" class="form-control btn-dark" value="" placeholder="Введите url нужного изображения"
+          id="pathToFile">
+
+        <div class="d-flex mt-3 position-relative p-2" style="background-color: #343a40;">
+          <span class="mr-3 text-white">URL изображения:</span>&nbsp;&nbsp;
+          <ol id="showFilePath" class="breadcrumb text-primary" style="background-color: #343a40;margin-bottom: 0;">
+            {{ url|safe }}
+          </ol>
+          <span class="btn btn-outline-warning white-hover">Копировать</span>
+        </div>
+      </div>
+      <div class="col-lg-3 mt-2">
+        <button class="btn btn-warning select-btn w-100 main-theme" id="selectBtn">Выбрать</button>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-lg-9">
+        <div name="column1">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="col-lg-3 text-white">
+        <p>
+          Характеристики изображения:</br><br>
+
+          {{ desc|safe }}
+        </p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <form action="/images/squeeze" method="GET">
+    <div class="row mt-5">
+      <select name="method" id="" style="width: 200px;" class="btn btn-warning dropdown-toggle main-theme">
+        <option value="JPEG">JPEG</option>
+        <option value="PNG">PNG</option>
+      </select>
+      <div class="form-group col-lg-3 mt-2 text-white text-left ml-5" style="font-size: 18px; text-align: left;">
+        Процент потери качества:
+      </div>
+      <div class="form-group col-lg-3 mt-3">
+        <input name="reduce" type="range" class="form-control-range slider" id="formControlRange" max="2" min="0" step="0.1" value="0">
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn main-theme mt-3" style="width: 200px;" type="submit">
+        Squeezi!
+      </button>
+      <a class="btn btn-secondary mt-3 ms-2" style="width: 200px;" href="/images/reset">
+        Отмена
+      </a>
+    </div>
+  </form>
+  {% csrf_token %}
+  <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <script src="{% static 'js/myscript.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="" id="filePlace">
+    <div data-v-4e85f282="" data-v-7a58c03c=""
+      class="card card-with-shadow card-rounded-max card-without-border upload-widget-card btn-dark"
+      style="background-color: #343a40;">
+      <div data-v-4e85f282="" class="card-body text-center">
+        <div data-v-4e85f282="" class="mt-5 mb-4 d-none d-md-block"><svg data-v-4e85f282=""
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16" height="16mm" width="22mm">
+            <path data-v-4e85f282=""
+              d="M.787 6.411l10.012 5.222a.437.437 0 0 0 .402 0l10.01-5.222a.434.434 0 0 0 .186-.585.45.45 0 0 0-.186-.187L11.2.417a.441.441 0 0 0-.404 0L.787 5.639a.439.439 0 0 0-.184.588.453.453 0 0 0 .184.184z"
+              fill="#DDDFE1"></path>
+            <path data-v-4e85f282=""
+              d="M21.21 9.589l-1.655-.864-7.953 4.148a1.31 1.31 0 0 1-1.202 0L2.444 8.725l-1.657.864a.437.437 0 0 0-.184.583.427.427 0 0 0 .184.187l10.012 5.224a.437.437 0 0 0 .402 0l10.01-5.224a.434.434 0 0 0 .186-.586.444.444 0 0 0-.186-.184z"
+              fill="#EDEFF0"></path>
+          </svg></div>
+        <div data-v-4e85f282="">
+          <form action="images/" method="POST" enctype="multipart/form-data" id="imageForm">
+            <input id="imageBox" name="image" type="file" value="Загрузить изображение." style="appearance: none;"
+            class="btn btn-primary btn-lg py-3">
+            {% csrf_token %}
+          </form>
+        </div>
+
+        <div data-v-4e85f282="" class="mt-2 mb-4 d-none d-md-block">
+          либо перетащите файл
+        </div>
+      </div>
+      <div data-v-4e85f282="" class="card-footer small text-muted text-center d-none d-md-block">
+        Вставьте изображение или
+        <a data-v-4e85f282="" href="#" class="text-muted select-photo-url-btn"
+          style="text-decoration: underline;">URL</a>
+        <span data-v-4e85f282="" class="d-inline-block border bg-white px-1 rounded ml-2">ctrl</span> + <span
+          data-v-4e85f282="" class="d-inline-block border bg-white px-1 rounded">v</span></div>
+    </div>
+  </div>
+
+  {% endblock %}

@@ -1,0 +1,1 @@
+web: gunicorn squeezi.wsgi --log-file -
