@@ -11,7 +11,7 @@ import math
 
 def save_image(file_body):
     name = str(int(time.time()))
-    f = open('staticfiles/loaded_images/'+name, 'wb')
+    f = open('static/loaded_images/'+name, 'wb')
     f.write(file_body)
     f.close()
     return 'loaded_images/'+name
@@ -20,8 +20,8 @@ def save_image(file_body):
 def main(request):
     if request.COOKIES.get("image") != None:
         name = request.COOKIES['image']
-        path = ['staticfiles'] + name.split('/')
-        im = Image.open('staticfiles/'+name)
+        path = ['static'] + name.split('/')
+        im = Image.open('static/'+name)
         desc = generate_description(im, name)
         path = ''.join(
             map(lambda part: f'<li class="breadcrumb-item">{part}</li>', path))
@@ -37,8 +37,8 @@ def load_image(request):
         img = request.FILES['image']
         name = save_image(img.read())
         res.set_cookie('image', name)
-    except Exception as e:
-        return HttpResponse(e)
+    except:
+        redirect('/')
     return res
 
 
@@ -57,7 +57,7 @@ def check_url(request):
 
 
 def generate_description(im, name):
-    statinfo = stat('staticfiles/'+name)
+    statinfo = stat('static/'+name)
     desc = '<strong>Size: </strong>' + str(im.width)+'x'+str(im.height) + '</br>'\
         + '<strong>Format: </strong>'+str(im.format) + '</br>'\
         + '<strong>DPI: </strong>' + str(im.info.get('dpi')) + '</br>'\
@@ -90,12 +90,12 @@ def squeeze(request):
         quality = 100 - int(float(request.GET['reduce']) * 50)
 
         name = request.COOKIES['image']
-        im = Image.open('staticfiles/'+name)
+        im = Image.open('static/'+name)
         ext = method.lower()
 
         new_name = 'squeezed_images/'+str(int(time.time())) + '.' + ext
 
-        im.save('staticfiles/'+new_name, method, quality=quality)
+        im.save('static/'+new_name, method, quality=quality)
         res.set_cookie("image", new_name)
     return res
 
