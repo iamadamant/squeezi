@@ -22,15 +22,24 @@ def save_image(file_body):
 
 
 def main(request):
+    res = redirect('/')
+    if request.COOKIES.get("error") != None:
+        err = request.COOKIES.get('error')
+        res = render(request, 'empty.html', {'err': err})
+        res.delete_cookie('error')
     if request.COOKIES.get("image") != None:
         name = request.COOKIES['image']
         path = ['static'] + name.split('/')
-        im = Image.open('static/'+name)
-        desc = generate_description(im, name)
-        path = ''.join(
-            map(lambda part: f'<li class="breadcrumb-item">{part}</li>', path))
-        return render(request, 'image.html', {
-            'image': name, 'url': path, 'desc': desc})
+        try:
+            im = Image.open('static/'+name)
+            desc = generate_description(im, name)
+            path = ''.join(
+                map(lambda part: f'<li class="breadcrumb-item">{part}</li>', path))
+            return render(request, 'image.html', {
+                'image': name, 'url': path, 'desc': desc})
+        except Exception as e:
+            res.set_cookie("error", e)
+            return res
     else:
         return render(request, 'empty.html')
 
@@ -94,16 +103,19 @@ def squeeze(request):
         quality = 100 - int(float(request.GET['reduce']) * 50)
 
         name = request.COOKIES['image']
-        im = Image.open('static/'+name)
-        ext = method.lower()
+        try:
+            im = Image.open('static/'+name)
+            ext = method.lower()
 
-        if not os.path.exists('static/squeezed_images/'):
-            mkdir('static/squeezed_images/')
+            if not os.path.exists('static/squeezed_images/'):
+                mkdir('static/squeezed_images/')
 
-        new_name = 'squeezed_images/'+str(int(time.time())) + '.' + ext
+            new_name = 'squeezed_images/'+str(int(time.time())) + '.' + ext
 
-        im.save('static/'+new_name, method, quality=quality)
-        res.set_cookie("image", new_name)
+            im.save('static/'+new_name, method, quality=quality)
+            res.set_cookie("image", new_name)
+        except Exception as e:
+            res.set_cookie("error", e)
     return res
 
 
